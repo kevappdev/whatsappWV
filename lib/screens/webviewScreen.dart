@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WebviewScreen extends StatefulWidget {
@@ -20,15 +22,20 @@ class _WebviewScreenState extends State<WebviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.only(bottom: 12.0),
-          child: WebViewWidget(
-            controller: controller,
+    return FutureBuilder(
+      future: Permission.camera.request(),
+      builder: (context, snapshot) {
+        return Scaffold(
+          body: SafeArea(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 12.0),
+              child: WebViewWidget(
+                controller: controller,
+              ),
+            ),
           ),
-        ),
-      ),
+        );
+      }
     );
   }
 }
